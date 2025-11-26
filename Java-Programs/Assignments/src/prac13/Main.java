@@ -1,0 +1,79 @@
+package prac13;
+import java.util.*;
+
+class Publication {
+    String title;
+    double price;
+    int copies;
+    
+    Publication(String title, double price, int copies) {
+        this.title = title;
+        this.price = price;
+        this.copies = copies;
+    }
+    
+    void saleCopy(int qty) {
+        if (qty <= copies) {
+            copies -= qty;
+            System.out.println("Sold " + qty + " copies of " + title);
+        } else {
+            System.out.println("Insufficient copies available");
+        }
+    }
+    
+    double getTotalSale() {
+        return (this.copies * this.price);
+    }
+}
+
+class Book extends Publication {
+    String author;
+    
+    Book(String title, double price, int copies, String author) {
+        super(title, price, copies);
+        this.author = author;
+    }
+    
+    void orderCopies(int qty) {
+        copies += qty;
+        System.out.println("Ordered " + qty + " more copies of " + title);
+    }
+}
+
+class Magazine extends Publication {
+    String currentIssue;
+    
+    Magazine(String title, double price, int copies, String currentIssue) {
+        super(title, price, copies);
+        this.currentIssue = currentIssue;
+    }
+    
+    void orderQty(int qty) {
+        copies += qty;
+        System.out.println("Ordered " + qty + " copies of magazine " + title);
+    }
+    
+    void receiveIssue(String newIssue) {
+        currentIssue = newIssue;
+        System.out.println("Received new issue: " + newIssue);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Book book1 = new Book("Java 2.0", 50, 100, "Apurv");
+        Book book2 = new Book("WebDev with AI", 60, 75, "Pranet");
+        Magazine magazine1 = new Magazine("AI", 30, 50, "January 2026");
+        
+        book1.orderCopies(25);
+        book2.orderCopies(15);
+        magazine1.orderQty(20);
+        
+        book1.saleCopy(10);
+        book2.saleCopy(5);
+        magazine1.saleCopy(15);
+        
+        double totalSale = book1.getTotalSale() + book2.getTotalSale() + magazine1.getTotalSale();
+        System.out.println("Total sale of all publications: $" + totalSale);
+    }
+}
